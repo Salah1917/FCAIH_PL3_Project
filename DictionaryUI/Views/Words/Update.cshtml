@@ -1,0 +1,36 @@
+﻿@model DictionaryUI.DTO.WordsDTO
+@{
+    Layout = "_Layout";
+}
+
+<h1 class="text-center text-warning my-4 display-6 fw-bold">
+    <i class="bi bi-pencil-fill"></i> Update Word
+</h1>
+
+<div class="container col-md-6">
+    <div class="card shadow-sm p-4">
+        <form asp-controller="Words" asp-action="Update" method="post">
+
+            <input type="hidden" asp-for="Id" />
+
+            <div class="mb-3">
+                <label asp-for="Word" class="form-label fw-bold">Word</label>
+                <input asp-for="Word" class="form-control form-control-lg" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Definition" class="form-label fw-bold">Definition</label>
+                <textarea asp-for="Definition"
+                          class="form-control form-control-lg"
+                          rows="4"></textarea>
+            </div>
+
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-warning btn-lg px-5">
+                    <i class="bi bi-pencil-square"></i> Update
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

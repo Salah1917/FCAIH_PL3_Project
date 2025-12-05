@@ -1,0 +1,39 @@
+﻿@using DictionaryUI.DTO
+@model WordsDTO
+@{
+    Layout = "_Layout";
+}
+
+<h2 class="text-center text-info my-4 display-6 fw-bold">
+    <i class="bi bi-plus-circle"></i> Create New Word
+</h2>
+
+<div class="container col-md-6">
+    <div class="card shadow-sm p-4">
+        <form asp-action="Create" method="post">
+            <div class="mb-3">
+                <label for="Word" class="form-label fw-bold">Word</label>
+                <input type="text"
+                       id="Word"
+                       name="Word"
+                       value="@Model.Word"
+                       class="form-control form-control-lg"
+                       required />
+            </div>
+
+            <div class="mb-3">
+                <label for="Definition" class="form-label fw-bold">Definition</label>
+                <textarea id="Definition" name="Definition"
+                          class="form-control form-control-lg"
+                          rows="4"
+                          required>@Model.Definition</textarea>
+            </div>
+
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-primary btn-lg px-5">
+                    <i class="bi bi-check-circle"></i> Create
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

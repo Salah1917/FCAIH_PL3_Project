@@ -1,0 +1,90 @@
+﻿@using DictionaryUI.DTO
+@model List<WordsDTO>
+@{
+    Layout = "_Layout";
+}
+
+<h1 class="text-center my-4 display-5 fw-bold text-success">
+    <i class="bi bi-journal-text"></i> Words Index
+</h1>
+
+<!-- Search Form -->
+<div class="d-flex justify-content-center mb-4">
+    <form method="get" asp-controller="Words" asp-action="Index" class="col-md-6">
+        <div class="input-group shadow-sm">
+            <input type="text" name="search" value="@ViewBag.CurrentSearch"
+                   class="form-control form-control-lg"
+                   placeholder="🔍 Search words..." />
+            <button type="submit" class="btn btn-secondary btn-lg">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Create New Word Button -->
+<div class="text-center mb-4">
+    <a asp-controller="Words" asp-action="Create" class="btn btn-success btn-lg fw-bold shadow-sm">
+        <i class="bi bi-plus-circle"></i> Add New Word
+    </a>
+</div>
+
+@if (Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered shadow-sm rounded overflow-hidden mb-5">
+            <caption class="caption-top text-center fs-3 fw-bold">All Words</caption>
+
+            <thead class="table-success text-center">
+                <tr>
+                    <th>Id</th>
+                    <th>Word</th>
+                    <th>Definition</th>
+                    <th style="width: 230px;">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var word in Model)
+                {
+                    <tr>
+                        <td class="text-center">@word.Id</td>
+                        <td class="fw-bold">@word.Word</td>
+                        <td>@word.Definition</td>
+                        <td class="text-center">
+
+                            <div class="btn-group">
+                                <a class="btn btn-outline-success"
+                                   asp-controller="Words" asp-action="Details"
+                                   asp-route-id="@word.Id">
+
+                                    <i class="bi bi-info-circle"></i> Details
+                                </a>
+
+                                <a class="btn btn-outline-primary"
+                                   asp-controller="Words" asp-action="Update"
+                                   asp-route-id="@word.Id">
+
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+
+                                <a class="btn btn-outline-danger"
+                                   asp-controller="Words" asp-action="Delete"
+                                   asp-route-id="@word.Id"
+                                   onclick="return confirm('Are you sure you want to delete this word?');">
+
+                                    <i class="bi bi-trash"></i> Delete
+                                </a>
+                            </div>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <h2 class="alert alert-danger text-center">No words available to display</h2>
+}
