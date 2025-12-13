@@ -35,10 +35,13 @@ type WordsController(db: DictionaryContext) =
     // POST: api/words
     [<HttpPost>]
     member this.Post([<FromBody>] entry: WordEntity) : IActionResult =
-        db.Entries.Add(entry) |> ignore
-        db.SaveChanges() |> ignore
-
-        this.CreatedAtAction("Get", {| id = entry.Id |}, entry) :> IActionResult
+        match entry.WordType with
+        | "Noun" | "Verb" | "Adjective" ->
+            db.Entries.Add(entry) |> ignore
+            db.SaveChanges() |> ignore
+            this.CreatedAtAction("Get", {| id = entry.Id |}, entry) :> IActionResult
+        | _ ->
+            this.BadRequest("Invalid WordType") :> IActionResult
 
 
     // Update Word
@@ -52,6 +55,8 @@ type WordsController(db: DictionaryContext) =
         else
             entry.Word <- updated.Word
             entry.Definition <- updated.Definition
+            entry.WordType <- updated.WordType
+            entry.Example <- updated.Example
 
             db.SaveChanges() |> ignore
             this.Ok(entry) :> IActionResult

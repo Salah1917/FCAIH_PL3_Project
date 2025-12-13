@@ -18,7 +18,8 @@ namespace DictionaryUI.Controllers
             if (string.IsNullOrWhiteSpace(search))
                 return View(allWords);
 
-            var searchResults = await http.GetFromJsonAsync<List<WordsDTO>>($"{BaseUrl}/search?query={search}");
+            var searchResults =
+                await http.GetFromJsonAsync<List<WordsDTO>>($"{BaseUrl}/search?query={search}");
 
             if (searchResults == null || !searchResults.Any())
                 return View(allWords);
@@ -31,7 +32,6 @@ namespace DictionaryUI.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var word = await http.GetFromJsonAsync<WordsDTO>($"{BaseUrl}/{id}");
-
             return View(word);
         }
         #endregion
@@ -43,25 +43,20 @@ namespace DictionaryUI.Controllers
             return View(new WordsDTO());
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Create(WordsDTO newWord)
         {
             newWord.Id = 0;
-            if (ModelState.IsValid)
-            {
-                var res = await http.PostAsJsonAsync(BaseUrl, newWord);
 
-                if (res.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Error creating word.");
-                    return View(newWord);
-                }
-            }
+            if (!ModelState.IsValid)
+                return View(newWord);
+
+            var res = await http.PostAsJsonAsync(BaseUrl, newWord);
+
+            if (res.IsSuccessStatusCode)
+                return RedirectToAction("Index");
+
+            ModelState.AddModelError("", "Error creating word.");
             return View(newWord);
         }
         #endregion
@@ -70,21 +65,20 @@ namespace DictionaryUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
-            var Word = await http.GetFromJsonAsync<WordsDTO>($"{BaseUrl}/{id}");
-            if (Word is null)
-            {
+            var word = await http.GetFromJsonAsync<WordsDTO>($"{BaseUrl}/{id}");
+            if (word == null)
                 return RedirectToAction("Index");
-            }
-            else
-            {
-                return View(Word);
-            }
+
+            return View(word);
         }
 
         [HttpPost]
         public async Task<IActionResult> Update(WordsDTO updatedWord)
         {
-            var res = await http.PutAsJsonAsync($"{BaseUrl}/{updatedWord.Id}", updatedWord);
+            if (!ModelState.IsValid)
+                return View(updatedWord);
+
+            await http.PutAsJsonAsync($"{BaseUrl}/{updatedWord.Id}", updatedWord);
             return RedirectToAction("Index");
         }
         #endregion
@@ -92,7 +86,7 @@ namespace DictionaryUI.Controllers
         #region Delete
         public async Task<IActionResult> Delete(int id)
         {
-            var res = await http.DeleteAsync($"{BaseUrl}/{id}");
+            await http.DeleteAsync($"{BaseUrl}/{id}");
             return RedirectToAction("Index");
         }
         #endregion

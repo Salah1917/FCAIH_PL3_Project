@@ -1,36 +1,48 @@
-﻿@model DictionaryUI.DTO.WordsDTO
+﻿@using DictionaryUI.DTO
+@model WordsDTO
+
 @{
     Layout = "_Layout";
 }
 
-<h1 class="text-center text-warning my-4 display-6 fw-bold">
-    <i class="bi bi-pencil-fill"></i> Update Word
-</h1>
+<h2 class="text-center text-warning my-4 fw-bold">Update Word</h2>
 
 <div class="container col-md-6">
     <div class="card shadow-sm p-4">
-        <form asp-controller="Words" asp-action="Update" method="post">
+        <form asp-action="Update" method="post">
 
             <input type="hidden" asp-for="Id" />
 
             <div class="mb-3">
-                <label asp-for="Word" class="form-label fw-bold">Word</label>
+                <label asp-for="Word" class="form-label fw-bold"></label>
                 <input asp-for="Word" class="form-control form-control-lg" />
             </div>
 
             <div class="mb-3">
-                <label asp-for="Definition" class="form-label fw-bold">Definition</label>
+                <label asp-for="Definition" class="form-label fw-bold"></label>
                 <textarea asp-for="Definition"
                           class="form-control form-control-lg"
                           rows="4"></textarea>
             </div>
 
-            <div class="text-center mt-3">
-                <button type="submit" class="btn btn-warning btn-lg px-5">
-                    <i class="bi bi-pencil-square"></i> Update
-                </button>
+            <div class="mb-3">
+                <label asp-for="Type" class="form-label fw-bold"></label>
+                <select asp-for="Type"
+                        class="form-select form-select-lg"
+                        asp-items="Html.GetEnumSelectList<WordType>()">
+                </select>
             </div>
 
+            <div class="mb-3">
+                <label asp-for="Example" class="form-label fw-bold"></label>
+                <textarea asp-for="Example"
+                          class="form-control form-control-lg"
+                          rows="3"></textarea>
+            </div>
+
+            <div class="text-center">
+                <button class="btn btn-warning btn-lg px-5">Update</button>
+            </div>
         </form>
     </div>
 </div>

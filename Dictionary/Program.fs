@@ -1,10 +1,14 @@
 namespace Dictionary
 #nowarn "20"
 
+
 open Microsoft.AspNetCore.Builder
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Hosting
 open Microsoft.EntityFrameworkCore
+open System.Threading.Tasks
+open Microsoft.AspNetCore.Http
+
 
 module Program =
     [<EntryPoint>]
@@ -15,7 +19,7 @@ module Program =
         // DbContext
         builder.Services.AddDbContext<DictionaryContext>(fun options ->
             options.UseSqlServer(
-                "Server=SalahMagdy;Database=DictionaryApp;Trusted_Connection=True;TrustServerCertificate=True"
+                "Server=SalahMagdy;Database=Dictionary;Trusted_Connection=True;TrustServerCertificate=True"
             ) |> ignore
         )
 
@@ -37,7 +41,7 @@ module Program =
         app.UseHttpsRedirection()
         app.UseAuthorization()
         app.MapControllers()
-
+        
         app.Run()
 
         0

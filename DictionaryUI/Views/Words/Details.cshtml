@@ -1,46 +1,39 @@
 ﻿@model DictionaryUI.DTO.WordsDTO
+
 @{
     Layout = "_Layout";
 }
 
-<h1 class="text-center text-info my-4 display-6 fw-bold">
-    <i class="bi bi-info-circle-fill"></i> Word Details
-</h1>
+<h2 class="text-center text-info my-4 fw-bold">Word Details</h2>
 
 <div class="container col-md-6">
     <div class="card shadow-sm p-4">
 
         <div class="mb-3">
-            <label class="form-label fw-bold text-secondary">Id</label>
-            <div class="form-control form-control-lg bg-light">
-                @Model.Id
-            </div>
+            <label class="fw-bold">Word</label>
+            <div class="form-control bg-light">@Model.Word</div>
         </div>
 
         <div class="mb-3">
-            <label class="form-label fw-bold text-secondary">Word</label>
-            <div class="form-control form-control-lg bg-light">
-                @Model.Word
-            </div>
+            <label class="fw-bold">Definition</label>
+            <div class="form-control bg-light">@Model.Definition</div>
         </div>
 
         <div class="mb-3">
-            <label class="form-label fw-bold text-secondary">Definition</label>
-            <div class="form-control bg-light" style="min-height:120px;">
-                @Model.Definition
-            </div>
+            <label class="fw-bold">Type</label>
+            <div class="form-control bg-light">@Model.Type</div>
         </div>
 
-        <div class="text-center mt-4">
-            <a asp-controller="Words" asp-action="Update" asp-route-id="@Model.Id"
-               class="btn btn-primary btn-lg me-2">
-                <i class="bi bi-pencil-square"></i> Edit
-            </a>
+        <div class="mb-3">
+            <label class="fw-bold">Example</label>
+            <div class="form-control bg-light">@Model.Example</div>
+        </div>
 
-            <a asp-controller="Words" asp-action="Index"
-               class="btn btn-secondary btn-lg">
-                <i class="bi bi-arrow-left-circle"></i> Back to List
-            </a>
+        <div class="text-center">
+            <a asp-action="Update" asp-route-id="@Model.Id"
+               class="btn btn-primary me-2">Edit</a>
+
+            <a asp-action="Index" class="btn btn-secondary">Back</a>
         </div>
 
     </div>
