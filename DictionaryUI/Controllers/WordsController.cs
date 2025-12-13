@@ -27,6 +27,15 @@ namespace DictionaryUI.Controllers
         }
         #endregion
 
+        #region Details
+        public async Task<IActionResult> Details(int id)
+        {
+            var word = await http.GetFromJsonAsync<WordsDTO>($"{BaseUrl}/{id}");
+
+            return View(word);
+        }
+        #endregion
+
         #region Create
         [HttpGet]
         public IActionResult Create()
