@@ -77,7 +77,9 @@ type WordsController(db: DictionaryContext) =
 
     // Search for words
     // GET: api/words/search?query=someText
-    [<HttpGet("search")>]
+
+    //edit by me
+        [<HttpGet("search")>]
     member this.Search([<FromQuery>] query: string) = task {
         if System.String.IsNullOrWhiteSpace(query) then
             return this.BadRequest("Query cannot be empty.") :> IActionResult
